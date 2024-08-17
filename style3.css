@@ -62,6 +62,7 @@ body {
     max-width: 150px;
     border-radius: 8px;
     margin-right: 20px;
+    height: 100%;
 }
 
 .blog-content {
@@ -107,4 +108,14 @@ body {
 .blog-actions .btn-edit {
     background-color: #3498db;
     color: #fff;
+}
+
+.todo-containe{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
+.todo-containe> li{
+  margin-right: 10px;
 }

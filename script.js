@@ -39,7 +39,6 @@ uploadTask.on('state_changed',
   }
 );
  try{
-
    const docRef = await addDoc(collection(db, "cities"), {
      name: addToDo.value,
      description:addToDo2.value,
@@ -75,7 +74,7 @@ querySnapshot.forEach(async (doc) => {
   toDoList.innerHTML += `<li>
   <div class="blog-post">
   <div class="blog-image">
-        <img src="https://via.placeholder.com/150" alt="Blog Image">
+        <img src="https://contenthub-static.grammarly.com/blog/wp-content/uploads/2022/08/BMD-3398.png" alt="Blog Image">
     </div>
     <div class="blog-content">
         <h2 class="blog-title">${getValue.name}</h2>
