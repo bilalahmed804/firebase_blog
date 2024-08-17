@@ -1,7 +1,27 @@
 import {db,doc,setDoc ,collection, addDoc,getDocs, deleteDoc,updateDoc,storage,
-  ref, uploadBytesResumable, getDownloadURL
+  ref, uploadBytesResumable, getDownloadURL,auth,onAuthStateChanged
 } from "./firebase.js"
+let logChange = document.querySelector("#log-Change")
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log(user.uid);
+    logChange.innerHTML = "Log Out"
+    document.querySelector('.open-modal-btn').addEventListener('click', function() {
+      document.getElementById('modal').style.display = 'flex';
+    })
+    document.querySelector('.close-modal').addEventListener('click', function() {
+      document.getElementById('modal').style.display = 'none';
+    })
+  } else {
+   alert("Before Account Create")
 
+   window.addEventListener('click', function(e) {
+    if (e.target.classList.contains('modal-overlay')) {
+      document.getElementById('modal').style.display = 'none';
+    }
+  });
+  }
+});
 let addToDo = document.querySelector("#addToDo")
 let addToDo2 = document.querySelector("#addToDo2")
 let toDoList = document.querySelector("#toDoList")
@@ -38,13 +58,17 @@ uploadTask.on('state_changed',
     });
   }
 );
+let data = new Date()
+let month = data.getMonth()
+let day = data.getDate()
+let year = data.getFullYear()
+let fullDate = `${day} / ${month} / ${year}`
  try{
    const docRef = await addDoc(collection(db, "cities"), {
      name: addToDo.value,
      description:addToDo2.value,
-     cost:cost.value,
-     image:file.files[0].name
-     
+     image:file.files[0].name,
+     date:fullDate
     });
     console.log("Document written with ID: ", docRef.id);
   }catch(error){
@@ -61,7 +85,6 @@ uploadTask.on('state_changed',
     
   addToDo.value = "";
 }
-
 let showDoc = document.querySelector("#showDoc")
 
 let addBtn = document.querySelector("#addBtn")
@@ -78,12 +101,9 @@ querySnapshot.forEach(async (doc) => {
     </div>
     <div class="blog-content">
         <h2 class="blog-title">${getValue.name}</h2>
-        <p class="blog-description">T${getValue.description}</p>
-        <p class="blog-cost">${getValue.cost}</p>
-        <div class="blog-actions">
-<button id="${doc.id}" onclick="del(this)" class="btn-delete">Delete</button>
-<button id="${doc.id}" onclick="edit(this)" class="btn-edit">Edit</button>
-</div>
+        <p class="blog-description">${getValue.description}</p>
+        <p class="blog-cost">${getValue.date}</p>
+
 </div>
 </div>
 </li>`
@@ -92,48 +112,4 @@ querySnapshot.forEach(async (doc) => {
   });
   console.log(querySnapshot);
   document.querySelector(".container").style.display = "none";
- 
-  async function del(e) {
-   
-     try{
-     await deleteDoc(doc(db, "cities",e.id));
-     
-   } catch(error){
-     console.log("error",error);
-    
-   }  finally {
-    document.querySelector(".container").style.display = "block";
-    setTimeout(()=>{
-      window.location.reload()
 
-    },5000)
-  }
-
-  }
-  async function edit(e) {
-    const toDoRef = doc(db, "cities", e.id);
-   
-     try{
-
-      // Set the "capital" field of the city 'DC'
-      await updateDoc(toDoRef, {
-        name: prompt("update value")
-      });
-     
-   } catch(error){
-     console.log("error",error);
-    
-   }  finally {
-    document.querySelector(".container").style.display = "block";
-    setTimeout(()=>{
-      window.location.reload()
-
-    },5000)
-  }
-
-  }
-
-
-
-window.del = del;
-window.edit = edit;

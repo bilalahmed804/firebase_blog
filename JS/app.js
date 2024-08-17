@@ -1,5 +1,5 @@
 import {auth, createUserWithEmailAndPassword,onAuthStateChanged ,signInWithEmailAndPassword,
-    signOut,sendEmailVerification,sendPasswordResetEmail,updatePassword
+    signOut,sendEmailVerification,sendPasswordResetEmail
 } from "./firebase.js"
 
 onAuthStateChanged(auth, (user) => {
@@ -8,7 +8,7 @@ onAuthStateChanged(auth, (user) => {
       // https://firebase.google.com/docs/reference/js/auth.user
     //   const uid = user.uid;
       console.log(user);
-      
+
     } else {
      console.log("User Not exit");
      
@@ -34,7 +34,7 @@ onAuthStateChanged(auth, (user) => {
 }
 let logIn = document.querySelector("#logIn")
 
-logIn.addEventListener("click", logIn$)
+logIn?.addEventListener("click", logIn$)
 
 let signUp = () =>{
     let email = document.querySelector("#email");
@@ -57,7 +57,7 @@ let signUp = () =>{
 
 let signUpBtn = document.querySelector(".signUp")
 
-signUpBtn.addEventListener("click",signUp)
+signUpBtn?.addEventListener("click",signUp)
 
 
 let logOutBtn = () =>{
@@ -72,12 +72,12 @@ let logOutBtn = () =>{
 }
 let logOutBtn2 = document.querySelector("#logOutBtn")
 
-logOutBtn2.addEventListener("click",logOutBtn)
+logOutBtn2?.addEventListener("click",logOutBtn)
 
 
 let verifyBtn = document.querySelector("#verifyBtn")
 
-verifyBtn.addEventListener("click",()=>{
+verifyBtn?.addEventListener("click",()=>{
 
     sendEmailVerification(auth.currentUser)
     .then(() => {
@@ -90,7 +90,7 @@ verifyBtn.addEventListener("click",()=>{
 let resetBtn = document.querySelector("#resetBtn")
 
 
-resetBtn.addEventListener("click",()=>{
+resetBtn?.addEventListener("click",()=>{
     let email = document.querySelector("#email")
     sendPasswordResetEmail(auth, email.value)
   .then(() => {
@@ -105,5 +105,4 @@ resetBtn.addEventListener("click",()=>{
     
   });
 })
-
 

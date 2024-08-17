@@ -50,10 +50,13 @@ h1 {
     border-color: #007bff;
     outline: none;
 }
-
+.login-button> a{
+    color: white;
+    text-decoration: none;
+}
 .login-button {
     background-color: #007bff;
-    color: #ffffff;
+    color: #ffffff ;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 4px;
